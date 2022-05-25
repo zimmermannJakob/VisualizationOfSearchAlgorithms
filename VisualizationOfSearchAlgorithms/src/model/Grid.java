@@ -10,6 +10,7 @@ public class Grid {
 	
 	Grid(int size){
 		this.size = size;
+		this.grid = new GridCell[size][size];
 		for(int x = 0; x<size; x++) {
 			for(int y = 0; y<size; y++) {
 				grid[x][y] = new GridCell(x,y);
@@ -36,6 +37,12 @@ public class Grid {
 		}
 		
 		return neighborsOfCell;
+	}
+	
+	public void updateCells(ArrayList<GridCell> cellsToUpdate) {
+		for(GridCell currentCell: cellsToUpdate) {
+			grid[currentCell.getX()][currentCell.getY()] = currentCell;
+		}
 	}
 
 	public GridCell getStartCell() {
