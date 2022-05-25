@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import model.GridCell;
 import model.GridRepresentation;
+import view.MainWindow;
 
 public class Controller {
 	private GridRepresentation gridRepresentation;
