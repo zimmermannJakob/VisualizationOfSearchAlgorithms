@@ -2,7 +2,14 @@ package model;
 
 import java.awt.Color;
 
-public class GridCell {
+import javax.swing.JPanel;
+import javax.swing.border.LineBorder;
+
+public class GridCell extends JPanel{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int xCoordinate, yCoordinate;
 	private Color color;
 	private char cellType;
@@ -12,6 +19,11 @@ public class GridCell {
 		this.yCoordinate = yCoord;
 		this.color = Color.white;
 		this.cellType = 'n';
+		this.setBorder(new LineBorder(Color.DARK_GRAY, 1));
+		this.setVisible(true);
+		
+		//for testing
+		this.setBackground(Color.green);
 	}
 
 	public Color getColor() {

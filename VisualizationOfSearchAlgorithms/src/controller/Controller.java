@@ -8,13 +8,19 @@ import view.MainWindow;
 
 public class Controller {
 	private GridRepresentation gridRepresentation;
+	private MainWindow mainWindow;
 	private int currentGridSize;
 	private long stepSize;
 
 	private Controller(int size, long stepSize) {
 		this.currentGridSize = size;
 		this.stepSize = stepSize;
-		this.gridRepresentation = new GridRepresentation(currentGridSize);
+		mainWindow = new MainWindow(this);
+		this.gridRepresentation = new GridRepresentation(currentGridSize, mainWindow);
+	}
+
+	public int getCurrentGridSize() {
+		return currentGridSize;
 	}
 
 	public static void main(String[] args) {
@@ -28,5 +34,4 @@ public class Controller {
 		this.stepSize = stepSize;
 		gridRepresentation.updateGridRepresentation(currentGridSize, cellsToUpdate);
 	}
-
 }

@@ -18,6 +18,10 @@ public class Grid {
 		}
 	}
 	
+	public GridCell[][] getGrid() {
+		return grid;
+	}
+
 	public ArrayList<GridCell> getNeighbors(GridCell cell){
 		ArrayList<GridCell> neighborsOfCell = new ArrayList<GridCell>();
 		int x = cell.getX();
