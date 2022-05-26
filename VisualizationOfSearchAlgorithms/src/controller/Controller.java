@@ -30,7 +30,7 @@ public class Controller {
 
 	public static void main(String[] args) {
 		// initializes the program with a 10x10 Grid and a time between animations of
-		// 1000ms
+		// 100ms
 		new Controller(10, 100);
 	}
 

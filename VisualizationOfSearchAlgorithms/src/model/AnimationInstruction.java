@@ -6,7 +6,7 @@ public class AnimationInstruction {
 
 	private ArrayList<GridCell> cellsToRedraw;
 	private String message;
-	
+
 	public AnimationInstruction(ArrayList<GridCell> cellsToRedraw, String message) {
 		this.cellsToRedraw = cellsToRedraw;
 		this.message = message;

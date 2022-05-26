@@ -25,8 +25,8 @@ public class AnimationThread implements Runnable {
 
 			window.drawGridCells(currentAnimationStep.getCellsToRedraw());
 			window.displayMessage(currentAnimationStep.getMessage());
-			
-			synchronized(this) {
+
+			synchronized (this) {
 				try {
 					this.wait(controller.getStepSize());
 				} catch (InterruptedException e) {
@@ -35,6 +35,5 @@ public class AnimationThread implements Runnable {
 				}
 			}
 		}
-		
 	}
 }

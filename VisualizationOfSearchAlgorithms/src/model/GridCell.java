@@ -22,8 +22,8 @@ public class GridCell {
 	@Override
 	public boolean equals(Object obj) {
 		GridCell otherCell = (GridCell) obj;
-		
-		if(this.xCoordinate == otherCell.xCoordinate && this.yCoordinate == otherCell.yCoordinate) {
+
+		if (this.xCoordinate == otherCell.xCoordinate && this.yCoordinate == otherCell.yCoordinate) {
 			return true;
 		}
 		return false;

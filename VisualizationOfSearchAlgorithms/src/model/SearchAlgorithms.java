@@ -21,12 +21,12 @@ public class SearchAlgorithms {
 		GridCell priorCurrent = null;
 		GridCell current = null;
 		GridCell tmp;
-		//start of the search
+		// start of the search
 		while (!BFSQueue.isEmpty()) {
 			ArrayList<GridCell> cellsToDraw = new ArrayList<GridCell>();
 
 			if (priorCurrent != null) {
-				
+
 				priorCurrent.setColor(Color.yellow);
 				cellsToDraw.add(priorCurrent);
 			}
@@ -35,8 +35,8 @@ public class SearchAlgorithms {
 			current = BFSQueue.poll();
 
 			visited.add(current);
-			//test
-			tmp = new GridCell(current.getX(),current.getY()); 
+			// test
+			tmp = new GridCell(current.getX(), current.getY());
 			tmp.setColor(Color.blue);
 			cellsToDraw.add(tmp);
 
@@ -47,15 +47,15 @@ public class SearchAlgorithms {
 
 			// getting adjacent cells which have been not visited yet
 			for (GridCell neighbor : grid.getNeighbors(current)) {
-			
+
 				if (!(visited.contains(neighbor))) {
 					BFSQueue.add(neighbor);
 					visited.add(neighbor);
-					
-					tmp = new GridCell(neighbor.getX(),neighbor.getY()); 
+
+					tmp = new GridCell(neighbor.getX(), neighbor.getY());
 					tmp.setColor(Color.LIGHT_GRAY);
 					cellsToDraw.add(tmp);
-					
+
 				}
 			}
 			priorCurrent = new GridCell(current.getX(), current.getY());
