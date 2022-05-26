@@ -37,7 +37,7 @@ public class MainWindow extends JFrame {
 	private JComboBox<String> algorithmSelection;
 
 	// TODO Edit here to display new algorithms
-	String[] algorithmsToChoose = { "Test" };
+	String[] algorithmsToChoose = { "BFS" };
 
 	public MainWindow(Controller controller) {
 		this.controller = controller;
@@ -137,6 +137,11 @@ public class MainWindow extends JFrame {
 			long l = 0;
 			controller.applyChanges(0, l, listOfCellsToUpdate);
 		}
+	}
+
+	public void displayMessage() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

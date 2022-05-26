@@ -5,9 +5,15 @@ import java.util.ArrayList;
 public class AnimationInstruction {
 
 	private ArrayList<GridCell> cellsToRedraw;
+	private String message;
 	
-	public void getCellsToRedraw(ArrayList<GridCell> cellsToRedraw) {
+	public AnimationInstruction(ArrayList<GridCell> cellsToRedraw, String message) {
 		this.cellsToRedraw = cellsToRedraw;
+		this.message = message;
+	}
+
+	public String getMessage() {
+		return message;
 	}
 
 	public ArrayList<GridCell> getCellsToRedraw() {

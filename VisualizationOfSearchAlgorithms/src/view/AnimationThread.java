@@ -24,6 +24,7 @@ public class AnimationThread implements Runnable {
 			AnimationInstruction currentAnimationStep = animationQueue.poll();
 
 			window.drawGridCells(currentAnimationStep.getCellsToRedraw());
+			window.displayMessage();
 		}
 		synchronized(this) {
 			try {
