@@ -78,9 +78,9 @@ public class MainWindow extends JFrame {
 		buttonArea.add(editPlayModeToggle);
 		buttonArea.add(startButton);
 
+		// mouse IO
+		gridArea.addMouseListener(new GridMouseListener(this));
 
-		
-		
 		this.validate();
 		this.repaint();
 	}
@@ -108,6 +108,19 @@ public class MainWindow extends JFrame {
 	public void updateGridCells(ArrayList<GridCell> cellsToUpdate) {
 		for (GridCell currentCell : cellsToUpdate) {
 			this.panelHolder[currentCell.getX()][currentCell.getY()].setBackground(currentCell.getColor());
+		}
+	}
+
+	public void cellClicked(int y, int x) {
+		if (this.panelHolder[x][y].getBackground().equals(Color.black)) {
+			panelHolder[x][y].setBackground(Color.white);
+			//TODO
+			//change gridRepresentation
+			
+		} else {
+			panelHolder[x][y].setBackground(Color.black);
+			//TODO
+			//change gridRepresentation
 		}
 	}
 
