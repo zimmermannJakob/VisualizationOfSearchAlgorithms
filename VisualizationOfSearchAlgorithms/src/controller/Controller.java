@@ -12,6 +12,10 @@ public class Controller {
 	private int currentGridSize;
 	private long stepSize;
 
+	public long getStepSize() {
+		return stepSize;
+	}
+
 	private Controller(int size, long stepSize) {
 		this.currentGridSize = size;
 		this.stepSize = stepSize;

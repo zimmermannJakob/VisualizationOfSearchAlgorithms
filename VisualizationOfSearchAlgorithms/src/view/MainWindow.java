@@ -108,6 +108,8 @@ public class MainWindow extends JFrame {
 		for (GridCell currentCell : cellsToUpdate) {
 			this.panelHolder[currentCell.getX()][currentCell.getY()].setBackground(currentCell.getColor());
 		}
+		this.validate();
+		this.repaint();
 	}
 
 	public void cellClicked(int y, int x) {
