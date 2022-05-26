@@ -4,6 +4,9 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.event.MouseAdapter;
+import java.util.ArrayList;
+
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -14,9 +17,14 @@ import javax.swing.border.LineBorder;
 
 import controller.Controller;
 import model.Grid;
+import model.GridCell;
 
 public class MainWindow extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Controller controller;
 	private JPanel gridArea;
 	private JPanel optionArea;
@@ -70,6 +78,9 @@ public class MainWindow extends JFrame {
 		buttonArea.add(editPlayModeToggle);
 		buttonArea.add(startButton);
 
+
+		
+		
 		this.validate();
 		this.repaint();
 	}
@@ -80,19 +91,24 @@ public class MainWindow extends JFrame {
 
 		for (int x = 0; x < size; x++) {
 			for (int y = 0; y < size; y++) {
-			
 				JPanel newPanel = new JPanel();
-				
-				newPanel.setBorder(new LineBorder(Color.black,1));
-				
+				newPanel.setBorder(new LineBorder(Color.LIGHT_GRAY, 1));
+
 				panelHolder[x][y] = newPanel;
 				gridArea.add(panelHolder[x][y]);
-				panelHolder[x][y] = gridObject.getGrid()[x][y];
-				
+
+				panelHolder[x][y].setBackground(gridObject.getGrid()[x][y].getColor());
+
 			}
 		}
 		this.validate();
 		this.repaint();
+	}
+
+	public void updateGridCells(ArrayList<GridCell> cellsToUpdate) {
+		for (GridCell currentCell : cellsToUpdate) {
+			this.panelHolder[currentCell.getX()][currentCell.getY()].setBackground(currentCell.getColor());
+		}
 	}
 
 }
