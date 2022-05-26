@@ -11,7 +11,7 @@ public class GridCell {
 	private Color color;
 	private char cellType;
 
-	GridCell(int xCoord, int yCoord) {
+	public GridCell(int xCoord, int yCoord) {
 		this.xCoordinate = xCoord;
 		this.yCoordinate = yCoord;
 		this.color = Color.white;

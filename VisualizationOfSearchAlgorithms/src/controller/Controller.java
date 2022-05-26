@@ -30,8 +30,13 @@ public class Controller {
 	}
 
 	public void applyChanges(int size, long stepSize, ArrayList<GridCell> cellsToUpdate) {
-		this.currentGridSize = size;
-		this.stepSize = stepSize;
+		if (size != 0) {
+			this.currentGridSize = size;
+		}
+		if (stepSize != 0) {
+			this.stepSize = stepSize;
+		}
+
 		gridRepresentation.updateGridRepresentation(currentGridSize, cellsToUpdate);
 	}
 }

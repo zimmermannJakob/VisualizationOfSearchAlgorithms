@@ -20,12 +20,12 @@ public class GridRepresentation {
 		if(this.size == size) {
 			//only cells need to be updated
 			this.grid.updateCells(cellsToUpdate);
-			//TODO MainWindow.updateGrid()
+			mainWindow.drawGridCells(cellsToUpdate);
 			return;
 		}
 		if(this.size != size) {
 			this.grid = new Grid(size);
-			//TODO MainWindow.updateGrid()
+			mainWindow.drawGridCells(cellsToUpdate);
 			return;
 		}
 	}

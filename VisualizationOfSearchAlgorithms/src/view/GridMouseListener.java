@@ -15,6 +15,7 @@ public class GridMouseListener extends MouseAdapter{
 		double x,y;
 		x = e.getX();
 		y = e.getY();
+		//TODO remove magic number
 		window.cellClicked((int)(Math.ceil((x/e.getComponent().getWidth())*10)-1), (int)(Math.ceil((y/e.getComponent().getHeight())*10))-1);
 	}
 }

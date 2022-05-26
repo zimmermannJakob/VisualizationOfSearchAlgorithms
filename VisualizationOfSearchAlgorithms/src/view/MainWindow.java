@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.awt.event.MouseAdapter;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -105,7 +104,7 @@ public class MainWindow extends JFrame {
 		this.repaint();
 	}
 
-	public void updateGridCells(ArrayList<GridCell> cellsToUpdate) {
+	public void drawGridCells(ArrayList<GridCell> cellsToUpdate) {
 		for (GridCell currentCell : cellsToUpdate) {
 			this.panelHolder[currentCell.getX()][currentCell.getY()].setBackground(currentCell.getColor());
 		}
@@ -113,14 +112,28 @@ public class MainWindow extends JFrame {
 
 	public void cellClicked(int y, int x) {
 		if (this.panelHolder[x][y].getBackground().equals(Color.black)) {
-			panelHolder[x][y].setBackground(Color.white);
-			//TODO
-			//change gridRepresentation
-			
+			// change to whiteCell 'n'
+			GridCell newGridCell = new GridCell(x, y);
+
+			newGridCell.setColor(Color.white);
+			newGridCell.setCellType('n'); // n for none
+
+			ArrayList<GridCell> listOfCellsToUpdate = new ArrayList<GridCell>();
+			listOfCellsToUpdate.add(newGridCell);
+			long l = 0;
+			controller.applyChanges(0, l, listOfCellsToUpdate);
+
 		} else {
-			panelHolder[x][y].setBackground(Color.black);
-			//TODO
-			//change gridRepresentation
+			// change to black Cell 'w'
+			GridCell newGridCell = new GridCell(x, y);
+
+			newGridCell.setColor(Color.black);
+			newGridCell.setCellType('w'); // w for wall
+
+			ArrayList<GridCell> listOfCellsToUpdate = new ArrayList<GridCell>();
+			listOfCellsToUpdate.add(newGridCell);
+			long l = 0;
+			controller.applyChanges(0, l, listOfCellsToUpdate);
 		}
 	}
 
