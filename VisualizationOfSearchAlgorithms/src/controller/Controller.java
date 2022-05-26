@@ -2,6 +2,7 @@ package controller;
 
 import java.util.ArrayList;
 
+import model.Grid;
 import model.GridCell;
 import model.GridRepresentation;
 import view.MainWindow;
@@ -30,7 +31,7 @@ public class Controller {
 	public static void main(String[] args) {
 		// initializes the program with a 10x10 Grid and a time between animations of
 		// 1000ms
-		new Controller(10, 1000);
+		new Controller(10, 100);
 	}
 
 	public void applyChanges(int size, long stepSize, ArrayList<GridCell> cellsToUpdate) {
@@ -42,5 +43,9 @@ public class Controller {
 		}
 
 		gridRepresentation.updateGridRepresentation(currentGridSize, cellsToUpdate);
+	}
+
+	public Grid getCurrentGrid() {
+		return gridRepresentation.getGridForAnimation();
 	}
 }

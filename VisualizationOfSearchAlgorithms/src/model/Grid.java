@@ -1,5 +1,6 @@
 package model;
 
+import java.awt.Color;
 import java.util.ArrayList;
 
 public class Grid {
@@ -16,6 +17,10 @@ public class Grid {
 				grid[x][y] = new GridCell(x,y);
 			}
 		}
+		this.startCell = grid[0][0];
+		this.startCell.setColor(Color.green.brighter());
+		this.endCell = grid[size-1][size-1];
+		this.endCell.setColor(Color.green.darker());
 	}
 	
 	public GridCell[][] getGrid() {

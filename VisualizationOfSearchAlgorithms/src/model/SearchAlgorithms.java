@@ -20,35 +20,45 @@ public class SearchAlgorithms {
 		ArrayList<GridCell> visited = new ArrayList<GridCell>();
 		GridCell priorCurrent = null;
 		GridCell current = null;
-
+		GridCell tmp;
+		//start of the search
 		while (!BFSQueue.isEmpty()) {
 			ArrayList<GridCell> cellsToDraw = new ArrayList<GridCell>();
 
 			if (priorCurrent != null) {
-				priorCurrent.setColor(Color.blue.brighter());
+				
+				priorCurrent.setColor(Color.yellow);
+				cellsToDraw.add(priorCurrent);
 			}
 
 			// new AnimationStep
 			current = BFSQueue.poll();
+
 			visited.add(current);
-			current.setColor(Color.blue);
-			cellsToDraw.add(current);
+			//test
+			tmp = new GridCell(current.getX(),current.getY()); 
+			tmp.setColor(Color.blue);
+			cellsToDraw.add(tmp);
 
 			if (current == endCell) {
 				animationQueue.add(new AnimationInstruction(cellsToDraw, "The end cell has been found! :)"));
+				return animationQueue;
 			}
 
 			// getting adjacent cells which have been not visited yet
 			for (GridCell neighbor : grid.getNeighbors(current)) {
-
+			
 				if (!(visited.contains(neighbor))) {
-
 					BFSQueue.add(neighbor);
-					neighbor.setColor(Color.LIGHT_GRAY);
-					cellsToDraw.add(neighbor);
+					visited.add(neighbor);
+					
+					tmp = new GridCell(neighbor.getX(),neighbor.getY()); 
+					tmp.setColor(Color.LIGHT_GRAY);
+					cellsToDraw.add(tmp);
+					
 				}
 			}
-			priorCurrent = current;
+			priorCurrent = new GridCell(current.getX(), current.getY());
 			animationQueue.add(new AnimationInstruction(cellsToDraw, ""));
 		}
 		animationQueue.add(new AnimationInstruction(null, "The end could not be reached :("));

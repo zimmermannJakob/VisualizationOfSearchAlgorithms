@@ -24,15 +24,17 @@ public class AnimationThread implements Runnable {
 			AnimationInstruction currentAnimationStep = animationQueue.poll();
 
 			window.drawGridCells(currentAnimationStep.getCellsToRedraw());
-			window.displayMessage();
-		}
-		synchronized(this) {
-			try {
-				this.wait(controller.getStepSize());
-			} catch (InterruptedException e) {
-				System.err.println("Error while trying to stop the animation Thread");
-				e.printStackTrace();
+			window.displayMessage(currentAnimationStep.getMessage());
+			
+			synchronized(this) {
+				try {
+					this.wait(controller.getStepSize());
+				} catch (InterruptedException e) {
+					System.err.println("Error while trying to stop the animation Thread");
+					e.printStackTrace();
+				}
 			}
 		}
+		
 	}
 }

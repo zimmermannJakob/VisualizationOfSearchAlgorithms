@@ -29,4 +29,8 @@ public class GridRepresentation {
 			return;
 		}
 	}
+
+	public Grid getGridForAnimation() {
+		return this.grid;
+	}
 }
