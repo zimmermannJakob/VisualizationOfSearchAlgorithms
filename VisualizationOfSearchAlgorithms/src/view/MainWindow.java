@@ -87,7 +87,7 @@ public class MainWindow extends JFrame {
 		buttonArea.add(startButton);
 
 		// mouse IO
-		gridArea.addMouseListener(new GridMouseListener(this));
+		gridArea.addMouseListener(new GridMouseListener(this, controller));
 		
 		//buttonIO
 		startButton.addActionListener(new ActionListener() {
