@@ -44,14 +44,14 @@ public class MainWindow extends JFrame {
 	private JComboBox<String> algorithmSelection;
 
 	// TODO Edit here to display new algorithms
-	String[] algorithmsToChoose = { "BFS" };
+	String[] algorithmsToChoose = { "BFS", "DFS" };
 	private MainWindow window;
 	private int status = 0; //0 before start of the animation, 1 after start of animation, 2 after end of animation
 
 	public MainWindow(Controller controller) {
 		this.controller = controller;
 		this.window = this;
-		// initialization of UI compponents
+		// initialization of UI components
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setSize(1080, 720);
 		this.setVisible(true);
@@ -111,7 +111,16 @@ public class MainWindow extends JFrame {
 					AnimationThread animation = new AnimationThread(animationQueue, window, controller);
 					Thread animationThread = new Thread(animation);
 					animationThread.start();
+				}
+				
+				if(algorithm == "DFS") {
+					displayMessage("Starting path calculation...");
+					Queue<AnimationInstruction> animationQueue = SearchAlgorithms.DFS(grid, grid.getStartCell(),grid.getEndCell());
+					displayMessage("Starting animation...");
 					
+					AnimationThread animation = new AnimationThread(animationQueue, window, controller);
+					Thread animationThread = new Thread(animation);
+					animationThread.start();
 				}
 			}
 			
