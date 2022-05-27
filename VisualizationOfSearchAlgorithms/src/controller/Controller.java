@@ -41,8 +41,14 @@ public class Controller {
 		if (stepSize != 0) {
 			this.stepSize = stepSize;
 		}
-
-		gridRepresentation.updateGridRepresentation(currentGridSize, cellsToUpdate);
+		if(cellsToUpdate != null) {
+			gridRepresentation.updateGridRepresentation(currentGridSize, cellsToUpdate);
+		}
+		
+	}
+	
+	public void createNewGridRepresentation() {
+		this.gridRepresentation = new GridRepresentation(currentGridSize, mainWindow);
 	}
 
 	public Grid getCurrentGrid() {

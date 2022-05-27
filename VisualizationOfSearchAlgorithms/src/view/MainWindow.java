@@ -16,6 +16,8 @@ import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JTextArea;
 import javax.swing.border.LineBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import controller.Controller;
 import model.AnimationInstruction;
@@ -37,13 +39,14 @@ public class MainWindow extends JFrame {
 	private JTextArea textArea;
 	private JSlider animationSpeedSlider;
 	private JSlider gridSizeSlider;
-	private JButton editPlayModeToggle;
+	private JButton resetGridButton;
 	private JButton startButton;
 	private JComboBox<String> algorithmSelection;
 
 	// TODO Edit here to display new algorithms
 	String[] algorithmsToChoose = { "BFS" };
 	private MainWindow window;
+	private int status = 0; //0 before start of the animation, 1 after start of animation, 2 after end of animation
 
 	public MainWindow(Controller controller) {
 		this.controller = controller;
@@ -58,9 +61,9 @@ public class MainWindow extends JFrame {
 		this.buttonArea = new JPanel();
 		this.textArea = new JTextArea();
 		this.textArea.setEditable(false);
-		this.animationSpeedSlider = new JSlider();
-		this.gridSizeSlider = new JSlider();
-		this.editPlayModeToggle = new JButton();
+		this.animationSpeedSlider = new JSlider(0,1000);
+		this.gridSizeSlider = new JSlider(10,100);
+		this.resetGridButton = new JButton("Reset Grid");
 		this.startButton = new JButton("Start");
 		this.algorithmSelection = new JComboBox<>(algorithmsToChoose);
 
@@ -80,26 +83,30 @@ public class MainWindow extends JFrame {
 		buttonArea.add(gridSizeSlider);
 		buttonArea.add(animationSpeedSlider);
 		buttonArea.add(algorithmSelection);
-		buttonArea.add(editPlayModeToggle);
+		buttonArea.add(resetGridButton);
 		buttonArea.add(startButton);
 
 		// mouse IO
 		gridArea.addMouseListener(new GridMouseListener(this));
-
-		this.validate();
-		this.repaint();
 		
 		//buttonIO
 		startButton.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				status = 1;
+				startButton.setEnabled(false);
+				gridSizeSlider.setEnabled(false);
+				resetGridButton.setEnabled(false);
+				algorithmSelection.setEnabled(false);
+				
 				String algorithm = (String) algorithmSelection.getSelectedItem();
 				Grid grid = controller.getCurrentGrid();
 				
 				if(algorithm == "BFS") {
 					displayMessage("Starting path calculation...");
 					Queue<AnimationInstruction> animationQueue = SearchAlgorithms.BFS(grid, grid.getStartCell(),grid.getEndCell());
+					displayMessage("Starting animation...");
 					
 					AnimationThread animation = new AnimationThread(animationQueue, window, controller);
 					Thread animationThread = new Thread(animation);
@@ -110,12 +117,54 @@ public class MainWindow extends JFrame {
 			
 		});
 		startButton.setFocusable(false);
+		
+		resetGridButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				startButton.setEnabled(true);
+				algorithmSelection.setEnabled(true);
+				textArea.setText("");
+				controller.createNewGridRepresentation();
+				status = 0;
+			}
+			
+		});
+		resetGridButton.setFocusable(false);
+		
+		
+		//Slider
+		this.animationSpeedSlider.addChangeListener(new ChangeListener() {
+			
+			@Override
+			public void stateChanged(ChangeEvent e) {
+				controller.applyChanges(0, animationSpeedSlider.getValue(), null);
+				
+			}
+		});
+		
+		this.animationSpeedSlider.setMajorTickSpacing(200);
+		this.animationSpeedSlider.setPaintTicks(true);
+		this.animationSpeedSlider.setPaintLabels(true);
+		this.animationSpeedSlider.setValue((int) controller.getStepSize());
+		//
+		this.validate();
+		this.repaint();
+	}
+
+	public void animationEnded() {
+		this.status = 2;
+		
+		gridSizeSlider.setEnabled(true);
+		resetGridButton.setEnabled(true);
 	}
 
 	public void setNewGrid(Grid gridObject, int size) {
 		this.panelHolder = new JPanel[size][size];
+		this.gridArea.removeAll();
 		this.gridArea.setLayout(new GridLayout(size, size));
-
+		
+		
 		for (int x = 0; x < size; x++) {
 			for (int y = 0; y < size; y++) {
 				JPanel newPanel = new JPanel();
@@ -143,6 +192,10 @@ public class MainWindow extends JFrame {
 	}
 
 	public void cellClicked(int y, int x) {
+		if(this.status == 1 || this.status == 2) {
+			return;
+		}
+		
 		if(this.panelHolder[x][y].getBackground().equals(Color.green.brighter())||this.panelHolder[x][y].getBackground().equals(Color.green.darker())) {
 			//start or endCell can't be painted as a wall 
 			return;
@@ -174,6 +227,10 @@ public class MainWindow extends JFrame {
 	}
 
 	public void displayMessage(String text) {
+		if(text == null) {
+			return;
+		}
+		
 		this.textArea.setText(text);
 		
 	}

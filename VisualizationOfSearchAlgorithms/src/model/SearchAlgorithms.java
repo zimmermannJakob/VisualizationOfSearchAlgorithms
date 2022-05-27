@@ -59,7 +59,7 @@ public class SearchAlgorithms {
 				}
 			}
 			priorCurrent = new GridCell(current.getX(), current.getY());
-			animationQueue.add(new AnimationInstruction(cellsToDraw, ""));
+			animationQueue.add(new AnimationInstruction(cellsToDraw, null));
 		}
 		animationQueue.add(new AnimationInstruction(null, "The end could not be reached :("));
 		return animationQueue;
