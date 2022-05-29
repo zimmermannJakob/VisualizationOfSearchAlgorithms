@@ -22,4 +22,9 @@ public class GridMouseListener extends MouseAdapter {
 		window.cellClicked((int) (Math.ceil((x / e.getComponent().getWidth()) * controller.getCurrentGridSize()) - 1),
 				(int) (Math.ceil((y / e.getComponent().getHeight()) * controller.getCurrentGridSize())) - 1);
 	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		window.reportMouseReleased();
+	}
 }
