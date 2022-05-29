@@ -93,7 +93,7 @@ public class MainWindow extends JFrame {
 		animationSpeedSliderPanel.setLayout(new BorderLayout());
 		
 		gridSizeSliederPanel.add(gridSizeSlider,BorderLayout.CENTER);
-		gridSizeSliederPanel.add(new JLabel("Grid Size Settings (Reset grid to apply)"), BorderLayout.NORTH);
+		gridSizeSliederPanel.add(new JLabel("Grid Size Settings"), BorderLayout.NORTH);
 		
 		animationSpeedSliderPanel.add(animationSpeedSlider,BorderLayout.CENTER);
 		animationSpeedSliderPanel.add(new JLabel("Animation Speed Settings [ms per step]"), BorderLayout.NORTH);
@@ -201,7 +201,7 @@ public class MainWindow extends JFrame {
 			@Override
 			public void stateChanged(ChangeEvent e) {
 				controller.applyChanges(0, animationSpeedSlider.getValue(), null);
-				displayMessage("Set the time in between animation steps to "+animationSpeedSlider.getValue());
+				displayMessage("Set the time in between animation steps to "+animationSpeedSlider.getValue()+" ms");
 
 			}
 		});
@@ -210,6 +210,7 @@ public class MainWindow extends JFrame {
 			@Override
 			public void stateChanged(ChangeEvent e) {
 				controller.applyChanges(gridSizeSlider.getValue(), 0, null);
+				controller.createNewGridRepresentation();
 				displayMessage("Set the Grid size to "+gridSizeSlider.getValue());
 			}
 		});
