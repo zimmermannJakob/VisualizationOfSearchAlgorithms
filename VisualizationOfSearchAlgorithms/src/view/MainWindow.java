@@ -4,17 +4,18 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.TextArea;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 import java.util.Queue;
-import java.util.TreeSet;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JTextArea;
@@ -30,14 +31,14 @@ import model.SearchAlgorithms;
 
 public class MainWindow extends JFrame {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private Controller controller;
 	private JPanel gridArea;
 	private JPanel optionArea;
 	private JPanel buttonArea;
+	private JPanel gridSizeSliederPanel = new JPanel();
+	private JPanel animationSpeedSliderPanel = new JPanel();
+	
 	private JPanel[][] panelHolder;
 	private JTextArea textArea;
 	private JSlider animationSpeedSlider;
@@ -52,8 +53,7 @@ public class MainWindow extends JFrame {
 	private int status = 0; // 0 before start of the animation, 1 after start of animation, 2 after end of
 							// animation
 	private ArrayList<GridCell> cellsAlreadyRefreshed = new ArrayList<GridCell>();
-	
-	
+
 	public MainWindow(Controller controller) {
 		this.controller = controller;
 		this.window = this;
@@ -68,7 +68,7 @@ public class MainWindow extends JFrame {
 		this.textArea = new JTextArea();
 		this.textArea.setEditable(false);
 		this.animationSpeedSlider = new JSlider(0, 1000);
-		this.gridSizeSlider = new JSlider(10, 100);
+		this.gridSizeSlider = new JSlider(10, 50);
 		this.resetGridButton = new JButton("Reset Grid");
 		this.startButton = new JButton("Start");
 		this.algorithmSelection = new JComboBox<>(algorithmsToChoose);
@@ -80,14 +80,27 @@ public class MainWindow extends JFrame {
 		this.add(optionArea, BorderLayout.EAST);
 
 		// option menu
-		buttonArea.setPreferredSize(new Dimension(250, 250));
+		buttonArea.setPreferredSize(new Dimension(250, 350));
 		optionArea.setLayout(new BorderLayout());
 		optionArea.add(buttonArea, BorderLayout.NORTH);
 		optionArea.add(textArea);
 		buttonArea.setLayout(new GridLayout(5, 1));
 		// determining layout of the options
-		buttonArea.add(gridSizeSlider);
-		buttonArea.add(animationSpeedSlider);
+		
+		buttonArea.add(gridSizeSliederPanel);
+		buttonArea.add(animationSpeedSliderPanel);
+		gridSizeSliederPanel.setLayout(new BorderLayout());
+		animationSpeedSliderPanel.setLayout(new BorderLayout());
+		
+		gridSizeSliederPanel.add(gridSizeSlider,BorderLayout.CENTER);
+		gridSizeSliederPanel.add(new JLabel("Grid Size Settings (Reset grid to apply)"), BorderLayout.NORTH);
+		
+		animationSpeedSliderPanel.add(animationSpeedSlider,BorderLayout.CENTER);
+		animationSpeedSliderPanel.add(new JLabel("Animation Speed Settings [ms per step]"), BorderLayout.NORTH);
+		
+		
+		//buttonArea.add(gridSizeSlider);
+		//buttonArea.add(animationSpeedSlider);
 		buttonArea.add(algorithmSelection);
 		buttonArea.add(resetGridButton);
 		buttonArea.add(startButton);
@@ -105,19 +118,29 @@ public class MainWindow extends JFrame {
 			@Override
 			public void mouseDragged(MouseEvent e) {
 
-				double x,y;
-				
+				double x, y;
+
 				x = e.getX();
 				y = e.getY();
-				
+
 				x = (Math.ceil((x / e.getComponent().getWidth()) * controller.getCurrentGridSize()) - 1);
 				y = (Math.ceil((y / e.getComponent().getHeight()) * controller.getCurrentGridSize()) - 1);
 
 				cellClicked((int) x, (int) y);
-				
+
 			}
 		});
-
+		//Slider
+		this.animationSpeedSlider.setMajorTickSpacing(200);
+		this.animationSpeedSlider.setPaintTicks(true);
+		this.animationSpeedSlider.setPaintLabels(true);
+		this.animationSpeedSlider.setValue((int) controller.getStepSize());
+		
+		this.gridSizeSlider.setMajorTickSpacing(10);
+		this.gridSizeSlider.setPaintTicks(true);
+		this.gridSizeSlider.setPaintLabels(true);
+		this.gridSizeSlider.setValue((int) controller.getCurrentGridSize());
+		
 		// buttonIO
 		startButton.addActionListener(new ActionListener() {
 
@@ -178,14 +201,20 @@ public class MainWindow extends JFrame {
 			@Override
 			public void stateChanged(ChangeEvent e) {
 				controller.applyChanges(0, animationSpeedSlider.getValue(), null);
+				displayMessage("Set the time in between animation steps to "+animationSpeedSlider.getValue());
 
 			}
 		});
+		this.gridSizeSlider.addChangeListener(new ChangeListener() {
+			
+			@Override
+			public void stateChanged(ChangeEvent e) {
+				controller.applyChanges(gridSizeSlider.getValue(), 0, null);
+				displayMessage("Set the Grid size to "+gridSizeSlider.getValue());
+			}
+		});
 
-		this.animationSpeedSlider.setMajorTickSpacing(200);
-		this.animationSpeedSlider.setPaintTicks(true);
-		this.animationSpeedSlider.setPaintLabels(true);
-		this.animationSpeedSlider.setValue((int) controller.getStepSize());
+		
 		//
 		this.validate();
 		this.repaint();
@@ -230,13 +259,13 @@ public class MainWindow extends JFrame {
 	}
 
 	public void cellClicked(int y, int x) {
-		
-		if(!cellsAlreadyRefreshed.contains(new GridCell(x,y))) {
-			cellsAlreadyRefreshed.add(new GridCell(x,y));
-		}else {
+
+		if (!cellsAlreadyRefreshed.contains(new GridCell(x, y))) {
+			cellsAlreadyRefreshed.add(new GridCell(x, y));
+		} else {
 			return;
 		}
-		
+
 		if (this.status == 1 || this.status == 2) {
 			return;
 		}
@@ -283,7 +312,7 @@ public class MainWindow extends JFrame {
 
 	public void reportMouseReleased() {
 		this.cellsAlreadyRefreshed = new ArrayList<GridCell>();
-		
+
 	}
 
 }

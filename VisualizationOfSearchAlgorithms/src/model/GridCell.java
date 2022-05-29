@@ -2,9 +2,6 @@ package model;
 
 import java.awt.Color;
 
-import javax.swing.JPanel;
-import javax.swing.border.LineBorder;
-
 public class GridCell {
 
 	private int xCoordinate, yCoordinate;
