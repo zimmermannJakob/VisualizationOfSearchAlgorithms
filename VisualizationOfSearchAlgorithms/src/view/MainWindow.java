@@ -134,7 +134,7 @@ public class MainWindow extends JFrame {
 		this.animationSpeedSlider.setMajorTickSpacing(200);
 		this.animationSpeedSlider.setPaintTicks(true);
 		this.animationSpeedSlider.setPaintLabels(true);
-		this.animationSpeedSlider.setValue((int) controller.getStepSize());
+		this.animationSpeedSlider.setValue((int) controller.accessStepSize(-1));
 		
 		this.gridSizeSlider.setMajorTickSpacing(10);
 		this.gridSizeSlider.setPaintTicks(true);
@@ -185,6 +185,7 @@ public class MainWindow extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				gridSizeSlider.setEnabled(true);
 				startButton.setEnabled(true);
 				algorithmSelection.setEnabled(true);
 				textArea.setText("");
@@ -224,7 +225,6 @@ public class MainWindow extends JFrame {
 	public void animationEnded() {
 		this.status = 2;
 
-		gridSizeSlider.setEnabled(true);
 		resetGridButton.setEnabled(true);
 	}
 

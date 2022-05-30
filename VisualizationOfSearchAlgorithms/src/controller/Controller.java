@@ -13,10 +13,6 @@ public class Controller {
 	private int currentGridSize;
 	private long stepSize;
 
-	public long getStepSize() {
-		return stepSize;
-	}
-
 	private Controller(int size, long stepSize) {
 		this.currentGridSize = size;
 		this.stepSize = stepSize;
@@ -39,11 +35,23 @@ public class Controller {
 			this.currentGridSize = size;
 		}
 		if (stepSize != 0) {
-			this.stepSize = stepSize;
+			accessStepSize(stepSize);
 		}
 		if(cellsToUpdate != null) {
 			gridRepresentation.updateGridRepresentation(currentGridSize, cellsToUpdate);
 		}
+		
+	}
+	
+	public synchronized long accessStepSize(long stepSize) {
+		//if stepSize is -1 this methode acts as a getter
+		if(stepSize == -1) {
+			return this.stepSize;
+		}
+		
+		//if stepsize is != to -1 this methode acts as a setter returning -1
+		this.stepSize = stepSize;
+		return -1;
 		
 	}
 	
