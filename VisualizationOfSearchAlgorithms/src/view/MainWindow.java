@@ -249,7 +249,7 @@ public class MainWindow extends JFrame {
 		this.repaint();
 	}
 
-	public void drawGridCells(ArrayList<GridCell> cellsToUpdate) {
+	public synchronized void drawGridCells(ArrayList<GridCell> cellsToUpdate) {
 		if (cellsToUpdate != null) {
 			for (GridCell currentCell : cellsToUpdate) {
 				this.panelHolder[currentCell.getX()][currentCell.getY()].setBackground(currentCell.getColor());
@@ -302,7 +302,7 @@ public class MainWindow extends JFrame {
 		}
 	}
 
-	public void displayMessage(String text) {
+	public synchronized void displayMessage(String text) {
 		if (text == null) {
 			return;
 		}
