@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.awt.TextArea;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -285,7 +284,7 @@ public class MainWindow extends JFrame {
 
 			ArrayList<GridCell> listOfCellsToUpdate = new ArrayList<GridCell>();
 			listOfCellsToUpdate.add(newGridCell);
-			long l = 0;
+			long l = -1;
 			controller.applyChanges(-1, l, listOfCellsToUpdate);
 
 		} else {
@@ -297,7 +296,7 @@ public class MainWindow extends JFrame {
 
 			ArrayList<GridCell> listOfCellsToUpdate = new ArrayList<GridCell>();
 			listOfCellsToUpdate.add(newGridCell);
-			long l = 0;
+			long l = -1;
 			controller.applyChanges(-1, l, listOfCellsToUpdate);
 		}
 	}
