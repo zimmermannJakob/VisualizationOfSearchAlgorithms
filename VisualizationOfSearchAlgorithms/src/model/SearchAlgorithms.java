@@ -11,6 +11,10 @@ public class SearchAlgorithms {
 	 * Color coding for animation: blue: current light_blue: every prior current
 	 * grey: added to search space (queue/stack/...)
 	 */
+	private static final Color currentColor = new Color(14,26,126);
+	private static final Color visitedColor = new Color(130,150,186);
+	private static final Color searchSpaceExpansionColor = Color.LIGHT_GRAY;
+	private static final Color pathColor = Color.yellow;
 
 	public static Queue<AnimationInstruction> BFS(Grid grid, GridCell startCell, GridCell endCell) {
 
@@ -28,7 +32,7 @@ public class SearchAlgorithms {
 
 			if (priorCurrent != null) {
 
-				priorCurrent.setColor(Color.yellow);
+				priorCurrent.setColor(visitedColor);
 				cellsToDraw.add(priorCurrent);
 			}
 
@@ -38,7 +42,7 @@ public class SearchAlgorithms {
 			visited.add(current);
 			// test
 			tmp = new GridCell(current.getX(), current.getY());
-			tmp.setColor(Color.blue);
+			tmp.setColor(currentColor);
 			cellsToDraw.add(tmp);
 
 			if (current == endCell) {
@@ -54,7 +58,7 @@ public class SearchAlgorithms {
 					visited.add(neighbor);
 
 					tmp = new GridCell(neighbor.getX(), neighbor.getY());
-					tmp.setColor(Color.LIGHT_GRAY);
+					tmp.setColor(searchSpaceExpansionColor);
 					cellsToDraw.add(tmp);
 
 				}
@@ -82,7 +86,7 @@ public class SearchAlgorithms {
 
 			if (priorCurrent != null) {
 
-				priorCurrent.setColor(Color.yellow);
+				priorCurrent.setColor(visitedColor);
 				cellsToDraw.add(priorCurrent);
 			}
 
@@ -92,7 +96,7 @@ public class SearchAlgorithms {
 			visited.add(current);
 			// test
 			tmp = new GridCell(current.getX(), current.getY());
-			tmp.setColor(Color.blue);
+			tmp.setColor(currentColor);
 			cellsToDraw.add(tmp);
 
 			if (current == endCell) {
@@ -108,7 +112,7 @@ public class SearchAlgorithms {
 					visited.add(neighbor);
 
 					tmp = new GridCell(neighbor.getX(), neighbor.getY());
-					tmp.setColor(Color.LIGHT_GRAY);
+					tmp.setColor(searchSpaceExpansionColor);
 					cellsToDraw.add(tmp);
 
 				}
