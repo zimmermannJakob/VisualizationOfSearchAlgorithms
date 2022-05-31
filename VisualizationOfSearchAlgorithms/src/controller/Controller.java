@@ -31,10 +31,10 @@ public class Controller {
 	}
 
 	public void applyChanges(int size, long stepSize, ArrayList<GridCell> cellsToUpdate) {
-		if (size != 0) {
+		if (size != -1) {
 			this.currentGridSize = size;
 		}
-		if (stepSize != 0) {
+		if (stepSize != -1) {
 			accessStepSize(stepSize);
 		}
 		if(cellsToUpdate != null) {

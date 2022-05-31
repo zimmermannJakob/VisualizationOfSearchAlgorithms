@@ -67,7 +67,7 @@ public class MainWindow extends JFrame {
 		this.buttonArea = new JPanel();
 		this.textArea = new JTextArea();
 		this.textArea.setEditable(false);
-		this.animationSpeedSlider = new JSlider(0, 1000);
+		this.animationSpeedSlider = new JSlider(0, 300);
 		this.gridSizeSlider = new JSlider(10, 50);
 		this.resetGridButton = new JButton("Reset Grid");
 		this.startButton = new JButton("Start");
@@ -131,7 +131,7 @@ public class MainWindow extends JFrame {
 			}
 		});
 		//Slider
-		this.animationSpeedSlider.setMajorTickSpacing(200);
+		this.animationSpeedSlider.setMajorTickSpacing(50);
 		this.animationSpeedSlider.setPaintTicks(true);
 		this.animationSpeedSlider.setPaintLabels(true);
 		this.animationSpeedSlider.setValue((int) controller.accessStepSize(-1));
@@ -201,7 +201,7 @@ public class MainWindow extends JFrame {
 
 			@Override
 			public void stateChanged(ChangeEvent e) {
-				controller.applyChanges(0, animationSpeedSlider.getValue(), null);
+				controller.applyChanges(-1, animationSpeedSlider.getValue(), null);
 				displayMessage("Set the time in between animation steps to "+animationSpeedSlider.getValue()+" ms");
 
 			}
@@ -210,7 +210,7 @@ public class MainWindow extends JFrame {
 			
 			@Override
 			public void stateChanged(ChangeEvent e) {
-				controller.applyChanges(gridSizeSlider.getValue(), 0, null);
+				controller.applyChanges(gridSizeSlider.getValue(), -1, null);
 				controller.createNewGridRepresentation();
 				displayMessage("Set the Grid size to "+gridSizeSlider.getValue());
 			}
@@ -286,7 +286,7 @@ public class MainWindow extends JFrame {
 			ArrayList<GridCell> listOfCellsToUpdate = new ArrayList<GridCell>();
 			listOfCellsToUpdate.add(newGridCell);
 			long l = 0;
-			controller.applyChanges(0, l, listOfCellsToUpdate);
+			controller.applyChanges(-1, l, listOfCellsToUpdate);
 
 		} else {
 			// change to black Cell 'w'
@@ -298,7 +298,7 @@ public class MainWindow extends JFrame {
 			ArrayList<GridCell> listOfCellsToUpdate = new ArrayList<GridCell>();
 			listOfCellsToUpdate.add(newGridCell);
 			long l = 0;
-			controller.applyChanges(0, l, listOfCellsToUpdate);
+			controller.applyChanges(-1, l, listOfCellsToUpdate);
 		}
 	}
 
