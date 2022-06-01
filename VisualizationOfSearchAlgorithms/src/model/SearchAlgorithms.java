@@ -16,7 +16,7 @@ public class SearchAlgorithms {
 	private static final Color visitedColor = new Color(130, 150, 186);
 	private static final Color searchSpaceExpansionColor = Color.LIGHT_GRAY;
 	private static final Color pathColor = Color.yellow;
-	
+
 	private static final double cellCostMultiplicator = 1;
 
 	public static Queue<AnimationInstruction> BFS(Grid grid, GridCell startCell, GridCell endCell) {
@@ -165,11 +165,12 @@ public class SearchAlgorithms {
 			for (GridCell neighbor : grid.getNeighbors(current)) {
 
 				if (!(visited.contains(neighbor))) {
-					
+
 					neighbor.setCostToThisCell(current.getCostToThisCell() + 1);
 					neighbor.setPriorVisitedCell(current);
-					
-					PQueue.add(new PQueueEntry(neighbor, getHeuristicValue(neighbor, endCell)+(neighbor.getCostToThisCell()*cellCostMultiplicator)));
+
+					PQueue.add(new PQueueEntry(neighbor, getHeuristicValue(neighbor, endCell)
+							+ (neighbor.getCostToThisCell() * cellCostMultiplicator)));
 					visited.add(neighbor);
 
 					tmp = new GridCell(neighbor.getX(), neighbor.getY());
@@ -184,21 +185,25 @@ public class SearchAlgorithms {
 		animationQueue.add(new AnimationInstruction(null, "The end could not be reached :("));
 		return animationQueue;
 	}
-	
-	static final double getHeuristicValue(GridCell currentCell,GridCell endCell) {
-		return Math.sqrt(2) *  Math.sqrt(Math.pow(endCell.getX()-currentCell.getX(), 2)+Math.pow(endCell.getY()-currentCell.getY(), 2));
+
+	static final double getHeuristicValue(GridCell currentCell, GridCell endCell) {
+		// subtracting a small value (magic number) at the end to prevent potential
+		// calculation error, so that the heuristic will always be an underestimate
+		return (Math.sqrt(2) * Math.sqrt(
+				Math.pow(endCell.getX() - currentCell.getX(), 2) + Math.pow(endCell.getY() - currentCell.getY(), 2)))
+				- 0.0001;
 	}
-	
+
 	static final Queue<AnimationInstruction> printPath(GridCell endCell) {
 		Queue<AnimationInstruction> animationQueue = new LinkedList<AnimationInstruction>();
-		
+
 		GridCell tmp;
-		
+
 		GridCell currentCell = endCell;
 		ArrayList<GridCell> cellsToDraw;
-		while(currentCell.getPriorVisitedCell()!= null) {
+		while (currentCell.getPriorVisitedCell() != null) {
 			cellsToDraw = new ArrayList<GridCell>();
-			
+
 			tmp = new GridCell(currentCell.getX(), currentCell.getY());
 			tmp.setColor(pathColor);
 			cellsToDraw.add(tmp);
@@ -211,7 +216,7 @@ public class SearchAlgorithms {
 		tmp.setColor(pathColor);
 		cellsToDraw.add(tmp);
 		animationQueue.add(new AnimationInstruction(cellsToDraw, null));
-		
+
 		return animationQueue;
 	}
 
