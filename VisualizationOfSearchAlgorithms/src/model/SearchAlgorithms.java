@@ -50,6 +50,7 @@ public class SearchAlgorithms {
 
 			if (current == endCell) {
 				animationQueue.add(new AnimationInstruction(cellsToDraw, "The end cell has been found! :)"));
+				animationQueue.addAll(printPath(endCell));
 				return animationQueue;
 			}
 
@@ -59,7 +60,8 @@ public class SearchAlgorithms {
 				if (!(visited.contains(neighbor))) {
 					bfsQueue.add(neighbor);
 					visited.add(neighbor);
-
+					neighbor.setPriorVisitedCell(current);
+					
 					tmp = new GridCell(neighbor.getX(), neighbor.getY());
 					tmp.setColor(searchSpaceExpansionColor);
 					cellsToDraw.add(tmp);
@@ -104,6 +106,7 @@ public class SearchAlgorithms {
 
 			if (current == endCell) {
 				animationQueue.add(new AnimationInstruction(cellsToDraw, "The end cell has been found! :)"));
+				animationQueue.addAll(printPath(endCell));
 				return animationQueue;
 			}
 
@@ -113,6 +116,7 @@ public class SearchAlgorithms {
 				if (!(visited.contains(neighbor))) {
 					dfsStack.push(neighbor);
 					visited.add(neighbor);
+					neighbor.setPriorVisitedCell(current);
 
 					tmp = new GridCell(neighbor.getX(), neighbor.getY());
 					tmp.setColor(searchSpaceExpansionColor);
