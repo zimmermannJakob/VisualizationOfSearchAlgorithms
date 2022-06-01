@@ -157,6 +157,7 @@ public class SearchAlgorithms {
 
 			if (current == endCell) {
 				animationQueue.add(new AnimationInstruction(cellsToDraw, "The end cell has been found! :)"));
+				animationQueue.addAll(printPath(endCell));
 				return animationQueue;
 			}
 
@@ -186,6 +187,32 @@ public class SearchAlgorithms {
 	
 	static final double getHeuristicValue(GridCell currentCell,GridCell endCell) {
 		return Math.sqrt(Math.pow(endCell.getX()-currentCell.getX(), 2)+Math.pow(endCell.getY()-currentCell.getY(), 2));
+	}
+	
+	static final Queue<AnimationInstruction> printPath(GridCell endCell) {
+		Queue<AnimationInstruction> animationQueue = new LinkedList<AnimationInstruction>();
+		
+		GridCell tmp;
+		
+		GridCell currentCell = endCell;
+		ArrayList<GridCell> cellsToDraw;
+		while(currentCell.getPriorVisitedCell()!= null) {
+			cellsToDraw = new ArrayList<GridCell>();
+			
+			tmp = new GridCell(currentCell.getX(), currentCell.getY());
+			tmp.setColor(pathColor);
+			cellsToDraw.add(tmp);
+
+			animationQueue.add(new AnimationInstruction(cellsToDraw, null));
+			currentCell = currentCell.getPriorVisitedCell();
+		}
+		cellsToDraw = new ArrayList<GridCell>();
+		tmp = new GridCell(currentCell.getX(), currentCell.getY());
+		tmp.setColor(pathColor);
+		cellsToDraw.add(tmp);
+		animationQueue.add(new AnimationInstruction(cellsToDraw, null));
+		
+		return animationQueue;
 	}
 
 }
