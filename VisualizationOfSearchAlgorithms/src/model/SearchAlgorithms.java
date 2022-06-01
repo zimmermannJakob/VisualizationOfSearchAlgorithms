@@ -17,7 +17,7 @@ public class SearchAlgorithms {
 	private static final Color searchSpaceExpansionColor = Color.LIGHT_GRAY;
 	private static final Color pathColor = Color.yellow;
 	
-	private static final double cellCostMultiplicator = 1/2;
+	private static final double cellCostMultiplicator = 1;
 
 	public static Queue<AnimationInstruction> BFS(Grid grid, GridCell startCell, GridCell endCell) {
 
@@ -186,7 +186,7 @@ public class SearchAlgorithms {
 	}
 	
 	static final double getHeuristicValue(GridCell currentCell,GridCell endCell) {
-		return Math.sqrt(Math.pow(endCell.getX()-currentCell.getX(), 2)+Math.pow(endCell.getY()-currentCell.getY(), 2));
+		return Math.sqrt(2) *  Math.sqrt(Math.pow(endCell.getX()-currentCell.getX(), 2)+Math.pow(endCell.getY()-currentCell.getY(), 2));
 	}
 	
 	static final Queue<AnimationInstruction> printPath(GridCell endCell) {
