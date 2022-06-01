@@ -7,6 +7,8 @@ public class GridCell {
 	private int xCoordinate, yCoordinate;
 	private Color color;
 	private char cellType;
+	private GridCell priorVisitedCell = null;
+	private int costToThisCell = 0;
 
 	public GridCell(int xCoord, int yCoord) {
 		this.xCoordinate = xCoord;
@@ -49,4 +51,21 @@ public class GridCell {
 	public int getY() {
 		return yCoordinate;
 	}
+
+	public GridCell getPriorVisitedCell() {
+		return priorVisitedCell;
+	}
+
+	public void setPriorVisitedCell(GridCell priorVisitedCell) {
+		this.priorVisitedCell = priorVisitedCell;
+	}
+
+	public int getCostToThisCell() {
+		return costToThisCell;
+	}
+
+	public void setCostToThisCell(int costToThisCell) {
+		this.costToThisCell = costToThisCell;
+	}
+	
 }

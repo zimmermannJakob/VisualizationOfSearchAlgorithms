@@ -3,6 +3,7 @@ package model;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Stack;
 
@@ -11,10 +12,12 @@ public class SearchAlgorithms {
 	 * Color coding for animation: blue: current light_blue: every prior current
 	 * grey: added to search space (queue/stack/...)
 	 */
-	private static final Color currentColor = new Color(14,26,126);
-	private static final Color visitedColor = new Color(130,150,186);
+	private static final Color currentColor = new Color(14, 26, 126);
+	private static final Color visitedColor = new Color(130, 150, 186);
 	private static final Color searchSpaceExpansionColor = Color.LIGHT_GRAY;
 	private static final Color pathColor = Color.yellow;
+	
+	private static final double cellCostMultiplicator = 1/2;
 
 	public static Queue<AnimationInstruction> BFS(Grid grid, GridCell startCell, GridCell endCell) {
 
@@ -69,7 +72,7 @@ public class SearchAlgorithms {
 		animationQueue.add(new AnimationInstruction(null, "The end could not be reached :("));
 		return animationQueue;
 	}
-	
+
 	public static Queue<AnimationInstruction> DFS(Grid grid, GridCell startCell, GridCell endCell) {
 
 		Queue<AnimationInstruction> animationQueue = new LinkedList<AnimationInstruction>();
@@ -123,5 +126,66 @@ public class SearchAlgorithms {
 		animationQueue.add(new AnimationInstruction(null, "The end could not be reached :("));
 		return animationQueue;
 	}
+
+	public static Queue<AnimationInstruction> AStar(Grid grid, GridCell startCell, GridCell endCell) {
+		Queue<AnimationInstruction> animationQueue = new LinkedList<AnimationInstruction>();
+		PriorityQueue<PQueueEntry> PQueue = new PriorityQueue<PQueueEntry>();
+		PQueue.add(new PQueueEntry(startCell, 0));
+
+		ArrayList<GridCell> visited = new ArrayList<GridCell>();
+		GridCell priorCurrent = null;
+		GridCell current = null;
+		GridCell tmp;
+
+		while (!PQueue.isEmpty()) {
+			ArrayList<GridCell> cellsToDraw = new ArrayList<GridCell>();
+
+			if (priorCurrent != null) {
+
+				priorCurrent.setColor(visitedColor);
+				cellsToDraw.add(priorCurrent);
+			}
+
+			// new AnimationStep
+			current = PQueue.poll().getCell();
+
+			visited.add(current);
+			// test
+			tmp = new GridCell(current.getX(), current.getY());
+			tmp.setColor(currentColor);
+			cellsToDraw.add(tmp);
+
+			if (current == endCell) {
+				animationQueue.add(new AnimationInstruction(cellsToDraw, "The end cell has been found! :)"));
+				return animationQueue;
+			}
+
+			// getting adjacent cells which have been not visited yet
+			for (GridCell neighbor : grid.getNeighbors(current)) {
+
+				if (!(visited.contains(neighbor))) {
+					
+					neighbor.setCostToThisCell(current.getCostToThisCell() + 1);
+					neighbor.setPriorVisitedCell(current);
+					
+					PQueue.add(new PQueueEntry(neighbor, getHeuristicValue(neighbor, endCell)+(neighbor.getCostToThisCell()*cellCostMultiplicator)));
+					visited.add(neighbor);
+
+					tmp = new GridCell(neighbor.getX(), neighbor.getY());
+					tmp.setColor(searchSpaceExpansionColor);
+					cellsToDraw.add(tmp);
+
+				}
+			}
+			priorCurrent = new GridCell(current.getX(), current.getY());
+			animationQueue.add(new AnimationInstruction(cellsToDraw, null));
+		}
+		animationQueue.add(new AnimationInstruction(null, "The end could not be reached :("));
+		return animationQueue;
+	}
 	
+	static final double getHeuristicValue(GridCell currentCell,GridCell endCell) {
+		return Math.sqrt(Math.pow(endCell.getX()-currentCell.getX(), 2)+Math.pow(endCell.getY()-currentCell.getY(), 2));
+	}
+
 }

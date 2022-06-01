@@ -47,7 +47,7 @@ public class MainWindow extends JFrame {
 	private JComboBox<String> algorithmSelection;
 
 	// TODO Edit here to display new algorithms
-	String[] algorithmsToChoose = { "BFS", "DFS" };
+	String[] algorithmsToChoose = { "BFS", "DFS", "A*" };
 	private MainWindow window;
 	private int status = 0; // 0 before start of the animation, 1 after start of animation, 2 after end of
 							// animation
@@ -168,6 +168,17 @@ public class MainWindow extends JFrame {
 				if (algorithm == "DFS") {
 					displayMessage("Starting path calculation...");
 					Queue<AnimationInstruction> animationQueue = SearchAlgorithms.DFS(grid, grid.getStartCell(),
+							grid.getEndCell());
+					displayMessage("Starting animation...");
+
+					AnimationThread animation = new AnimationThread(animationQueue, window, controller);
+					Thread animationThread = new Thread(animation);
+					animationThread.start();
+				}
+				
+				if (algorithm == "A*") {
+					displayMessage("Starting path calculation...");
+					Queue<AnimationInstruction> animationQueue = SearchAlgorithms.AStar(grid, grid.getStartCell(),
 							grid.getEndCell());
 					displayMessage("Starting animation...");
 
