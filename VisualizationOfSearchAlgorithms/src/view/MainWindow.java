@@ -47,7 +47,7 @@ public class MainWindow extends JFrame {
 	private JComboBox<String> algorithmSelection;
 
 	// TODO Edit here to display new algorithms
-	String[] algorithmsToChoose = { "BFS", "DFS", "A*" };
+	String[] algorithmsToChoose = { "BFS", "DFS","Best First Search", "A*","Heuristic Dephth First Search" };
 	private MainWindow window;
 	private int status = 0; // 0 before start of the animation, 1 after start of animation, 2 after end of
 							// animation
@@ -186,6 +186,29 @@ public class MainWindow extends JFrame {
 					Thread animationThread = new Thread(animation);
 					animationThread.start();
 				}
+				if (algorithm == "Best First Search") {
+					displayMessage("Starting path calculation...");
+					Queue<AnimationInstruction> animationQueue = SearchAlgorithms.BestFirstSearch(grid, grid.getStartCell(),
+							grid.getEndCell());
+					displayMessage("Starting animation...");
+
+					AnimationThread animation = new AnimationThread(animationQueue, window, controller);
+					Thread animationThread = new Thread(animation);
+					animationThread.start();
+				}
+				if (algorithm == "Heuristic Dephth First Search") {
+					displayMessage("Starting path calculation...");
+					Queue<AnimationInstruction> animationQueue = SearchAlgorithms.HeuristicDephthFirstSearch(grid, grid.getStartCell(),
+							grid.getEndCell());
+					displayMessage("Starting animation...");
+
+					AnimationThread animation = new AnimationThread(animationQueue, window, controller);
+					Thread animationThread = new Thread(animation);
+					animationThread.start();
+				}
+				
+				
+				
 			}
 
 		});
