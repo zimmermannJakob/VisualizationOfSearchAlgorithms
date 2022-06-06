@@ -242,6 +242,7 @@ public class MainWindow extends JFrame {
 				algorithmSelection.setEnabled(true);
 				textArea.setText("");
 				controller.createNewGridRepresentation();
+				startButton.setText("Start");
 				status = 0;
 			}
 
