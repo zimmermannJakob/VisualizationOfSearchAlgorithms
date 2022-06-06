@@ -290,7 +290,6 @@ public class SearchAlgorithms {
 				if (!(visited.contains(neighbor))) {
 					
 					localMinHeuristic.add(new PQueueEntry(neighbor, -getHeuristicValue(neighbor, endCell)));
-					System.out.println(getHeuristicValue(neighbor, endCell));
 					visited.add(neighbor);
 					neighbor.setPriorVisitedCell(current);
 
