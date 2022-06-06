@@ -37,7 +37,7 @@ public class MainWindow extends JFrame {
 	private JPanel buttonArea;
 	private JPanel gridSizeSliederPanel = new JPanel();
 	private JPanel animationSpeedSliderPanel = new JPanel();
-	
+
 	private JPanel[][] panelHolder;
 	private JTextArea textArea;
 	private JSlider animationSpeedSlider;
@@ -47,7 +47,7 @@ public class MainWindow extends JFrame {
 	private JComboBox<String> algorithmSelection;
 
 	// TODO Edit here to display new algorithms
-	String[] algorithmsToChoose = { "BFS", "DFS","Best First Search", "A*","Heuristic Dephth First Search" };
+	String[] algorithmsToChoose = { "BFS", "DFS", "Best First Search", "A*", "Heuristic Dephth First Search" };
 	private MainWindow window;
 	private int status = 0; // 0 before start of the animation, 1 after start of animation, 2 after end of
 							// animation
@@ -85,21 +85,20 @@ public class MainWindow extends JFrame {
 		optionArea.add(textArea);
 		buttonArea.setLayout(new GridLayout(5, 1));
 		// determining layout of the options
-		
+
 		buttonArea.add(gridSizeSliederPanel);
 		buttonArea.add(animationSpeedSliderPanel);
 		gridSizeSliederPanel.setLayout(new BorderLayout());
 		animationSpeedSliderPanel.setLayout(new BorderLayout());
-		
-		gridSizeSliederPanel.add(gridSizeSlider,BorderLayout.CENTER);
+
+		gridSizeSliederPanel.add(gridSizeSlider, BorderLayout.CENTER);
 		gridSizeSliederPanel.add(new JLabel("Grid Size Settings"), BorderLayout.NORTH);
-		
-		animationSpeedSliderPanel.add(animationSpeedSlider,BorderLayout.CENTER);
+
+		animationSpeedSliderPanel.add(animationSpeedSlider, BorderLayout.CENTER);
 		animationSpeedSliderPanel.add(new JLabel("Animation Speed Settings [ms per step]"), BorderLayout.NORTH);
-		
-		
-		//buttonArea.add(gridSizeSlider);
-		//buttonArea.add(animationSpeedSlider);
+
+		// buttonArea.add(gridSizeSlider);
+		// buttonArea.add(animationSpeedSlider);
 		buttonArea.add(algorithmSelection);
 		buttonArea.add(resetGridButton);
 		buttonArea.add(startButton);
@@ -129,86 +128,106 @@ public class MainWindow extends JFrame {
 
 			}
 		});
-		//Slider
+		// Slider
 		this.animationSpeedSlider.setMajorTickSpacing(50);
 		this.animationSpeedSlider.setPaintTicks(true);
 		this.animationSpeedSlider.setPaintLabels(true);
 		this.animationSpeedSlider.setValue((int) controller.accessStepSize(-1));
-		
+
 		this.gridSizeSlider.setMajorTickSpacing(10);
 		this.gridSizeSlider.setPaintTicks(true);
 		this.gridSizeSlider.setPaintLabels(true);
 		this.gridSizeSlider.setValue((int) controller.getCurrentGridSize());
-		
+
 		// buttonIO
 		startButton.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				status = 1;
-				startButton.setEnabled(false);
-				gridSizeSlider.setEnabled(false);
-				resetGridButton.setEnabled(false);
-				algorithmSelection.setEnabled(false);
 
-				String algorithm = (String) algorithmSelection.getSelectedItem();
-				Grid grid = controller.getCurrentGrid();
+				if (startButton.getText() == "Start") {
+					status = 1;
+					startButton.setEnabled(false);
+					gridSizeSlider.setEnabled(false);
+					resetGridButton.setEnabled(false);
+					algorithmSelection.setEnabled(false);
 
-				if (algorithm == "BFS") {
-					displayMessage("Starting path calculation...");
-					Queue<AnimationInstruction> animationQueue = SearchAlgorithms.BFS(grid, grid.getStartCell(),
-							grid.getEndCell());
-					displayMessage("Starting animation...");
+					String algorithm = (String) algorithmSelection.getSelectedItem();
+					Grid grid = controller.getCurrentGrid();
 
-					AnimationThread animation = new AnimationThread(animationQueue, window, controller);
-					Thread animationThread = new Thread(animation);
-					animationThread.start();
+					if (algorithm == "BFS") {
+						displayMessage("Starting path calculation...");
+						Queue<AnimationInstruction> animationQueue = SearchAlgorithms.BFS(grid, grid.getStartCell(),
+								grid.getEndCell());
+						displayMessage("Starting animation...");
+
+						AnimationThread animation = new AnimationThread(animationQueue, window, controller);
+						Thread animationThread = new Thread(animation);
+						animationThread.start();
+					}
+
+					if (algorithm == "DFS") {
+						displayMessage("Starting path calculation...");
+						Queue<AnimationInstruction> animationQueue = SearchAlgorithms.DFS(grid, grid.getStartCell(),
+								grid.getEndCell());
+						displayMessage("Starting animation...");
+
+						AnimationThread animation = new AnimationThread(animationQueue, window, controller);
+						Thread animationThread = new Thread(animation);
+						animationThread.start();
+					}
+
+					if (algorithm == "A*") {
+						displayMessage("Starting path calculation...");
+						Queue<AnimationInstruction> animationQueue = SearchAlgorithms.AStar(grid, grid.getStartCell(),
+								grid.getEndCell());
+						displayMessage("Starting animation...");
+
+						AnimationThread animation = new AnimationThread(animationQueue, window, controller);
+						Thread animationThread = new Thread(animation);
+						animationThread.start();
+					}
+					if (algorithm == "Best First Search") {
+						displayMessage("Starting path calculation...");
+						Queue<AnimationInstruction> animationQueue = SearchAlgorithms.BestFirstSearch(grid,
+								grid.getStartCell(), grid.getEndCell());
+						displayMessage("Starting animation...");
+
+						AnimationThread animation = new AnimationThread(animationQueue, window, controller);
+						Thread animationThread = new Thread(animation);
+						animationThread.start();
+					}
+					if (algorithm == "Heuristic Dephth First Search") {
+						displayMessage("Starting path calculation...");
+						Queue<AnimationInstruction> animationQueue = SearchAlgorithms.HeuristicDephthFirstSearch(grid,
+								grid.getStartCell(), grid.getEndCell());
+						displayMessage("Starting animation...");
+
+						AnimationThread animation = new AnimationThread(animationQueue, window, controller);
+						Thread animationThread = new Thread(animation);
+						animationThread.start();
+					}
 				}
 
-				if (algorithm == "DFS") {
-					displayMessage("Starting path calculation...");
-					Queue<AnimationInstruction> animationQueue = SearchAlgorithms.DFS(grid, grid.getStartCell(),
-							grid.getEndCell());
-					displayMessage("Starting animation...");
+				if (startButton.getText() == "Clear output") {
 
-					AnimationThread animation = new AnimationThread(animationQueue, window, controller);
-					Thread animationThread = new Thread(animation);
-					animationThread.start();
-				}
-				
-				if (algorithm == "A*") {
-					displayMessage("Starting path calculation...");
-					Queue<AnimationInstruction> animationQueue = SearchAlgorithms.AStar(grid, grid.getStartCell(),
-							grid.getEndCell());
-					displayMessage("Starting animation...");
+					ArrayList<GridCell> cellsToClear = new ArrayList<GridCell>();
+					for (int x = 0; x < controller.getCurrentGridSize(); x++) {
+						for (int y = 0; y < controller.getCurrentGridSize(); y++) {
+							cellsToClear.add(controller.getCurrentGrid().getGrid()[x][y]);
+						}
+					}
 
-					AnimationThread animation = new AnimationThread(animationQueue, window, controller);
-					Thread animationThread = new Thread(animation);
-					animationThread.start();
-				}
-				if (algorithm == "Best First Search") {
-					displayMessage("Starting path calculation...");
-					Queue<AnimationInstruction> animationQueue = SearchAlgorithms.BestFirstSearch(grid, grid.getStartCell(),
-							grid.getEndCell());
-					displayMessage("Starting animation...");
+					drawGridCells(cellsToClear);
 
-					AnimationThread animation = new AnimationThread(animationQueue, window, controller);
-					Thread animationThread = new Thread(animation);
-					animationThread.start();
+					startButton.setText("Start");
+					gridSizeSlider.setEnabled(true);
+					startButton.setEnabled(true);
+					algorithmSelection.setEnabled(true);
+					textArea.setText("");
+					status = 0;
 				}
-				if (algorithm == "Heuristic Dephth First Search") {
-					displayMessage("Starting path calculation...");
-					Queue<AnimationInstruction> animationQueue = SearchAlgorithms.HeuristicDephthFirstSearch(grid, grid.getStartCell(),
-							grid.getEndCell());
-					displayMessage("Starting animation...");
 
-					AnimationThread animation = new AnimationThread(animationQueue, window, controller);
-					Thread animationThread = new Thread(animation);
-					animationThread.start();
-				}
-				
-				
-				
 			}
 
 		});
@@ -235,21 +254,20 @@ public class MainWindow extends JFrame {
 			@Override
 			public void stateChanged(ChangeEvent e) {
 				controller.applyChanges(-1, animationSpeedSlider.getValue(), null);
-				displayMessage("Set the time in between animation steps to "+animationSpeedSlider.getValue()+" ms");
+				displayMessage("Set the time in between animation steps to " + animationSpeedSlider.getValue() + " ms");
 
 			}
 		});
 		this.gridSizeSlider.addChangeListener(new ChangeListener() {
-			
+
 			@Override
 			public void stateChanged(ChangeEvent e) {
 				controller.applyChanges(gridSizeSlider.getValue(), -1, null);
 				controller.createNewGridRepresentation();
-				displayMessage("Set the Grid size to "+gridSizeSlider.getValue());
+				displayMessage("Set the Grid size to " + gridSizeSlider.getValue());
 			}
 		});
 
-		
 		//
 		this.validate();
 		this.repaint();
@@ -259,6 +277,8 @@ public class MainWindow extends JFrame {
 		this.status = 2;
 
 		resetGridButton.setEnabled(true);
+		startButton.setText("Clear output");
+		startButton.setEnabled(true);
 	}
 
 	public void setNewGrid(Grid gridObject, int size) {
