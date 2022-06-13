@@ -44,6 +44,20 @@ public class Grid {
 		if (y > 0 && (grid[x][y - 1].getCellType() != 'w')) {
 			neighborsOfCell.add(grid[x][y - 1]);
 		}
+		
+		if(x>0 && y>0 && (grid[x-1][y - 1].getCellType() != 'w')) {
+			neighborsOfCell.add(grid[x-1][y-1]);
+		}
+		if(x<size-1 && y<size-1 && (grid[x+1][y + 1].getCellType() != 'w')) {
+			neighborsOfCell.add(grid[x+1][y+1]);
+		}
+		if(x>0 && y<size-1 && (grid[x-1][y + 1].getCellType() != 'w')) {
+			neighborsOfCell.add(grid[x-1][y+1]);
+		}
+		if(x<size-1 && y>0 && (grid[x+1][y - 1].getCellType() != 'w')) {
+			neighborsOfCell.add(grid[x+1][y-1]);
+		}
+		
 
 		return neighborsOfCell;
 	}
