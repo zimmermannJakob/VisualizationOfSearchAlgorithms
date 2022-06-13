@@ -20,6 +20,7 @@ public class SearchAlgorithms {
 	private static final double cellCostMultiplicator = 1;
 
 	public static Queue<AnimationInstruction> BFS(Grid grid, GridCell startCell, GridCell endCell) {
+		int traversedCells = 0;
 
 		Queue<AnimationInstruction> animationQueue = new LinkedList<AnimationInstruction>();
 		Queue<GridCell> bfsQueue = new LinkedList<GridCell>();
@@ -41,6 +42,7 @@ public class SearchAlgorithms {
 
 			// new AnimationStep
 			current = bfsQueue.poll();
+			traversedCells++;
 
 			visited.add(current);
 			// test
@@ -49,8 +51,8 @@ public class SearchAlgorithms {
 			cellsToDraw.add(tmp);
 
 			if (current == endCell) {
-				animationQueue.add(new AnimationInstruction(cellsToDraw, "The end cell has been found! :)"));
-				animationQueue.addAll(printPath(endCell));
+				animationQueue.add(new AnimationInstruction(cellsToDraw,null ));
+				animationQueue.addAll(printPath(endCell, "The end cell has been found! \n\nTaversed Cells: "+traversedCells));
 				return animationQueue;
 			}
 
@@ -71,11 +73,12 @@ public class SearchAlgorithms {
 			priorCurrent = new GridCell(current.getX(), current.getY());
 			animationQueue.add(new AnimationInstruction(cellsToDraw, null));
 		}
-		animationQueue.add(new AnimationInstruction(null, "The end could not be reached :("));
+		animationQueue.add(new AnimationInstruction(null, "The end could not be reached \n\nTaversedCells: "+traversedCells));
 		return animationQueue;
 	}
 
 	public static Queue<AnimationInstruction> DFS(Grid grid, GridCell startCell, GridCell endCell) {
+		int traversedCells = 0;
 
 		Queue<AnimationInstruction> animationQueue = new LinkedList<AnimationInstruction>();
 		Stack<GridCell> dfsStack = new Stack<GridCell>();
@@ -97,6 +100,7 @@ public class SearchAlgorithms {
 
 			// new AnimationStep
 			current = dfsStack.pop();
+			traversedCells++;
 
 			visited.add(current);
 			// test
@@ -105,8 +109,8 @@ public class SearchAlgorithms {
 			cellsToDraw.add(tmp);
 
 			if (current == endCell) {
-				animationQueue.add(new AnimationInstruction(cellsToDraw, "The end cell has been found! :)"));
-				animationQueue.addAll(printPath(endCell));
+				animationQueue.add(new AnimationInstruction(cellsToDraw, null));
+				animationQueue.addAll(printPath(endCell, "The end cell has been found! \n\nTaversed Cells: "+traversedCells));
 				return animationQueue;
 			}
 
@@ -127,11 +131,13 @@ public class SearchAlgorithms {
 			priorCurrent = new GridCell(current.getX(), current.getY());
 			animationQueue.add(new AnimationInstruction(cellsToDraw, null));
 		}
-		animationQueue.add(new AnimationInstruction(null, "The end could not be reached :("));
+		animationQueue.add(new AnimationInstruction(null, "The end could not be reached \n\nTaversedCells: "+traversedCells));
 		return animationQueue;
 	}
 
 	public static Queue<AnimationInstruction> AStar(Grid grid, GridCell startCell, GridCell endCell) {
+		int traversedCells = 0;
+		
 		Queue<AnimationInstruction> animationQueue = new LinkedList<AnimationInstruction>();
 		PriorityQueue<PQueueEntry> PQueue = new PriorityQueue<PQueueEntry>();
 		PQueue.add(new PQueueEntry(startCell, 0));
@@ -152,6 +158,7 @@ public class SearchAlgorithms {
 
 			// new AnimationStep
 			current = PQueue.poll().getCell();
+			traversedCells++;
 
 			visited.add(current);
 			// test
@@ -160,8 +167,8 @@ public class SearchAlgorithms {
 			cellsToDraw.add(tmp);
 
 			if (current == endCell) {
-				animationQueue.add(new AnimationInstruction(cellsToDraw, "The end cell has been found! :)"));
-				animationQueue.addAll(printPath(endCell));
+				animationQueue.add(new AnimationInstruction(cellsToDraw, null));
+				animationQueue.addAll(printPath(endCell, "The end cell has been found! \n\nTaversed Cells: "+traversedCells));
 				return animationQueue;
 			}
 
@@ -186,11 +193,12 @@ public class SearchAlgorithms {
 			priorCurrent = new GridCell(current.getX(), current.getY());
 			animationQueue.add(new AnimationInstruction(cellsToDraw, null));
 		}
-		animationQueue.add(new AnimationInstruction(null, "The end could not be reached :("));
+		animationQueue.add(new AnimationInstruction(null, "The end could not be reached \n\nTaversedCells: "+traversedCells));
 		return animationQueue;
 	}
 	
 	public static Queue<AnimationInstruction> BestFirstSearch(Grid grid, GridCell startCell, GridCell endCell) {
+		int traversedCells = 0;
 		Queue<AnimationInstruction> animationQueue = new LinkedList<AnimationInstruction>();
 		PriorityQueue<PQueueEntry> PQueue = new PriorityQueue<PQueueEntry>();
 		PQueue.add(new PQueueEntry(startCell, 0));
@@ -211,6 +219,7 @@ public class SearchAlgorithms {
 
 			// new AnimationStep
 			current = PQueue.poll().getCell();
+			traversedCells++;
 
 			visited.add(current);
 			// test
@@ -219,8 +228,8 @@ public class SearchAlgorithms {
 			cellsToDraw.add(tmp);
 
 			if (current == endCell) {
-				animationQueue.add(new AnimationInstruction(cellsToDraw, "The end cell has been found! :)"));
-				animationQueue.addAll(printPath(endCell));
+				animationQueue.add(new AnimationInstruction(cellsToDraw, null));
+				animationQueue.addAll(printPath(endCell, "The end cell has been found! \n\nTaversed Cells: "+traversedCells));
 				return animationQueue;
 			}
 
@@ -244,11 +253,13 @@ public class SearchAlgorithms {
 			priorCurrent = new GridCell(current.getX(), current.getY());
 			animationQueue.add(new AnimationInstruction(cellsToDraw, null));
 		}
-		animationQueue.add(new AnimationInstruction(null, "The end could not be reached :("));
+		animationQueue.add(new AnimationInstruction(null, "The end could not be reached \n\nTaversedCells: "+traversedCells));
 		return animationQueue;
 	}
 	
 	public static Queue<AnimationInstruction> HeuristicDephthFirstSearch(Grid grid, GridCell startCell, GridCell endCell) {
+		int traversedCells = 0;
+		
 		Queue<AnimationInstruction> animationQueue = new LinkedList<AnimationInstruction>();
 		Stack<GridCell> dfsStack = new Stack<GridCell>();
 		dfsStack.push(startCell);
@@ -269,6 +280,7 @@ public class SearchAlgorithms {
 
 			// new AnimationStep
 			current = dfsStack.pop();
+			traversedCells++;
 
 			visited.add(current);
 			// test
@@ -277,8 +289,8 @@ public class SearchAlgorithms {
 			cellsToDraw.add(tmp);
 
 			if (current == endCell) {
-				animationQueue.add(new AnimationInstruction(cellsToDraw, "The end cell has been found! :)"));
-				animationQueue.addAll(printPath(endCell));
+				animationQueue.add(new AnimationInstruction(cellsToDraw, null));
+				animationQueue.addAll(printPath(endCell, "The end cell has been found! \n\nTaversed Cells: "+traversedCells));
 				return animationQueue;
 			}
 
@@ -311,19 +323,19 @@ public class SearchAlgorithms {
 			priorCurrent = new GridCell(current.getX(), current.getY());
 			animationQueue.add(new AnimationInstruction(cellsToDraw, null));
 		}
-		animationQueue.add(new AnimationInstruction(null, "The end could not be reached :("));
+		animationQueue.add(new AnimationInstruction(null, "The end could not be reached \n\nTaversedCells: "+traversedCells));
 		return animationQueue;
 	}
 
 	static final double getHeuristicValue(GridCell currentCell, GridCell endCell) {
-		// subtracting a small value (magic number) at the end to prevent potential
-		// calculation error, so that the heuristic will always be an underestimate
-		return (Math.sqrt(2) * Math.sqrt(
-				Math.pow(endCell.getX() - currentCell.getX(), 2) + Math.pow(endCell.getY() - currentCell.getY(), 2)))
-				- 0.0001;
+		//sqrt(Dx^2 + Dy^2) D: delta
+		return (Math.sqrt(
+				Math.pow(endCell.getX() - currentCell.getX(), 2) + Math.pow(endCell.getY() - currentCell.getY(), 2)));
 	}
 
-	static final Queue<AnimationInstruction> printPath(GridCell endCell) {
+	static final Queue<AnimationInstruction> printPath(GridCell endCell, String message) {
+		int pathLength = 0;
+		
 		Queue<AnimationInstruction> animationQueue = new LinkedList<AnimationInstruction>();
 
 		GridCell tmp;
@@ -336,7 +348,7 @@ public class SearchAlgorithms {
 			tmp = new GridCell(currentCell.getX(), currentCell.getY());
 			tmp.setColor(pathColor);
 			cellsToDraw.add(tmp);
-
+			pathLength++;
 			animationQueue.add(new AnimationInstruction(cellsToDraw, null));
 			currentCell = currentCell.getPriorVisitedCell();
 		}
@@ -344,7 +356,7 @@ public class SearchAlgorithms {
 		tmp = new GridCell(currentCell.getX(), currentCell.getY());
 		tmp.setColor(pathColor);
 		cellsToDraw.add(tmp);
-		animationQueue.add(new AnimationInstruction(cellsToDraw, null));
+		animationQueue.add(new AnimationInstruction(cellsToDraw, message + "\nPathlength: "+pathLength));
 
 		return animationQueue;
 	}
