@@ -3,6 +3,7 @@ package view;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -47,7 +48,7 @@ public class MainWindow extends JFrame {
 	private JComboBox<String> algorithmSelection;
 
 	// TODO Edit here to display new algorithms
-	String[] algorithmsToChoose = { "BFS", "DFS", "Best First Search", "A*", "Heuristic Dephth First Search" };
+	String[] algorithmsToChoose = { "BFS (optimal Path)", "DFS", "Best First Search","Heuristic Dephth First Search" ,"A* (optimal Path)"  };
 	private MainWindow window;
 	private int status = 0; // 0 before start of the animation, 1 after start of animation, 2 after end of
 							// animation
@@ -72,6 +73,8 @@ public class MainWindow extends JFrame {
 		this.startButton = new JButton("Start");
 		this.algorithmSelection = new JComboBox<>(algorithmsToChoose);
 
+		int fontSize = 20;
+		this.textArea.setFont(new Font(textArea.getFont().getFontName(),textArea.getFont().getStyle() ,  fontSize));
 		// adding UI components to the MainWindow
 		this.setLayout(new BorderLayout());
 
@@ -155,7 +158,7 @@ public class MainWindow extends JFrame {
 					String algorithm = (String) algorithmSelection.getSelectedItem();
 					Grid grid = controller.getCurrentGrid();
 
-					if (algorithm == "BFS") {
+					if (algorithm == "BFS (optimal Path)") {
 						displayMessage("Starting path calculation...");
 						Queue<AnimationInstruction> animationQueue = SearchAlgorithms.BFS(grid, grid.getStartCell(),
 								grid.getEndCell());
@@ -177,7 +180,7 @@ public class MainWindow extends JFrame {
 						animationThread.start();
 					}
 
-					if (algorithm == "A*") {
+					if (algorithm == "A* (optimal Path)") {
 						displayMessage("Starting path calculation...");
 						Queue<AnimationInstruction> animationQueue = SearchAlgorithms.AStar(grid, grid.getStartCell(),
 								grid.getEndCell());
@@ -255,7 +258,7 @@ public class MainWindow extends JFrame {
 			@Override
 			public void stateChanged(ChangeEvent e) {
 				controller.applyChanges(-1, animationSpeedSlider.getValue(), null);
-				displayMessage("Set the time in between animation steps to " + animationSpeedSlider.getValue() + " ms");
+				displayMessage("Stepsize: " + animationSpeedSlider.getValue() + " ms");
 
 			}
 		});
