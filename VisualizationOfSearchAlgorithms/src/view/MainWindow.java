@@ -47,8 +47,7 @@ public class MainWindow extends JFrame {
 	private JButton startButton;
 	private JComboBox<String> algorithmSelection;
 
-	// TODO Edit here to display new algorithms
-	String[] algorithmsToChoose = { "BFS (optimal Path)", "DFS", "Best First Search","Heuristic Dephth First Search" ,"A* (optimal Path)"  };
+	String[] algorithmsToChoose = { "BFS (optimal Path)", "DFS", "Best First Search","Heuristic Depth First Search" ,"A* (optimal Path)"  };
 	private MainWindow window;
 	private int status = 0; // 0 before start of the animation, 1 after start of animation, 2 after end of
 							// animation
@@ -160,7 +159,7 @@ public class MainWindow extends JFrame {
 
 					if (algorithm == "BFS (optimal Path)") {
 						displayMessage("Starting path calculation...");
-						Queue<AnimationInstruction> animationQueue = SearchAlgorithms.BFS(grid, grid.getStartCell(),
+						Queue<AnimationInstruction> animationQueue = SearchAlgorithms.bfs(grid, grid.getStartCell(),
 								grid.getEndCell());
 						displayMessage("Starting animation...");
 
@@ -171,7 +170,7 @@ public class MainWindow extends JFrame {
 
 					if (algorithm == "DFS") {
 						displayMessage("Starting path calculation...");
-						Queue<AnimationInstruction> animationQueue = SearchAlgorithms.DFS(grid, grid.getStartCell(),
+						Queue<AnimationInstruction> animationQueue = SearchAlgorithms.dfs(grid, grid.getStartCell(),
 								grid.getEndCell());
 						displayMessage("Starting animation...");
 
@@ -182,7 +181,7 @@ public class MainWindow extends JFrame {
 
 					if (algorithm == "A* (optimal Path)") {
 						displayMessage("Starting path calculation...");
-						Queue<AnimationInstruction> animationQueue = SearchAlgorithms.AStar(grid, grid.getStartCell(),
+						Queue<AnimationInstruction> animationQueue = SearchAlgorithms.aStar(grid, grid.getStartCell(),
 								grid.getEndCell());
 						displayMessage("Starting animation...");
 
@@ -192,7 +191,7 @@ public class MainWindow extends JFrame {
 					}
 					if (algorithm == "Best First Search") {
 						displayMessage("Starting path calculation...");
-						Queue<AnimationInstruction> animationQueue = SearchAlgorithms.BestFirstSearch(grid,
+						Queue<AnimationInstruction> animationQueue = SearchAlgorithms.bestFirstSearch(grid,
 								grid.getStartCell(), grid.getEndCell());
 						displayMessage("Starting animation...");
 
@@ -200,9 +199,9 @@ public class MainWindow extends JFrame {
 						Thread animationThread = new Thread(animation);
 						animationThread.start();
 					}
-					if (algorithm == "Heuristic Dephth First Search") {
+					if (algorithm == "Heuristic Depth First Search") {
 						displayMessage("Starting path calculation...");
-						Queue<AnimationInstruction> animationQueue = SearchAlgorithms.HeuristicDephthFirstSearch(grid,
+						Queue<AnimationInstruction> animationQueue = SearchAlgorithms.heuristicDepthFirstSearch(grid,
 								grid.getStartCell(), grid.getEndCell());
 						displayMessage("Starting animation...");
 

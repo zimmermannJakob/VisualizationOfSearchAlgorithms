@@ -19,7 +19,7 @@ public class SearchAlgorithms {
 
 	private static final double cellCostMultiplicator = 1;
 
-	public static Queue<AnimationInstruction> BFS(Grid grid, GridCell startCell, GridCell endCell) {
+	public static Queue<AnimationInstruction> bfs(Grid grid, GridCell startCell, GridCell endCell) {
 		int traversedCells = 0;
 
 		Queue<AnimationInstruction> animationQueue = new LinkedList<AnimationInstruction>();
@@ -56,7 +56,7 @@ public class SearchAlgorithms {
 				return animationQueue;
 			}
 
-			// getting adjacent cells which have been not visited yet
+			// getting adjacent cells which have not been visited yet
 			for (GridCell neighbor : grid.getNeighbors(current)) {
 
 				if (!(visited.contains(neighbor))) {
@@ -77,7 +77,7 @@ public class SearchAlgorithms {
 		return animationQueue;
 	}
 
-	public static Queue<AnimationInstruction> DFS(Grid grid, GridCell startCell, GridCell endCell) {
+	public static Queue<AnimationInstruction> dfs(Grid grid, GridCell startCell, GridCell endCell) {
 		int traversedCells = 0;
 
 		Queue<AnimationInstruction> animationQueue = new LinkedList<AnimationInstruction>();
@@ -114,7 +114,7 @@ public class SearchAlgorithms {
 				return animationQueue;
 			}
 
-			// getting adjacent cells which have been not visited yet
+			// getting adjacent cells which have not been visited yet
 			for (GridCell neighbor : grid.getNeighbors(current)) {
 
 				if (!(visited.contains(neighbor))) {
@@ -135,7 +135,7 @@ public class SearchAlgorithms {
 		return animationQueue;
 	}
 
-	public static Queue<AnimationInstruction> AStar(Grid grid, GridCell startCell, GridCell endCell) {
+	public static Queue<AnimationInstruction> aStar(Grid grid, GridCell startCell, GridCell endCell) {
 		int traversedCells = 0;
 		
 		Queue<AnimationInstruction> animationQueue = new LinkedList<AnimationInstruction>();
@@ -172,7 +172,7 @@ public class SearchAlgorithms {
 				return animationQueue;
 			}
 
-			// getting adjacent cells which have been not visited yet
+			// getting adjacent cells which have not been visited yet
 			for (GridCell neighbor : grid.getNeighbors(current)) {
 
 				if (!(visited.contains(neighbor))) {
@@ -197,7 +197,7 @@ public class SearchAlgorithms {
 		return animationQueue;
 	}
 	
-	public static Queue<AnimationInstruction> BestFirstSearch(Grid grid, GridCell startCell, GridCell endCell) {
+	public static Queue<AnimationInstruction> bestFirstSearch(Grid grid, GridCell startCell, GridCell endCell) {
 		int traversedCells = 0;
 		Queue<AnimationInstruction> animationQueue = new LinkedList<AnimationInstruction>();
 		PriorityQueue<PQueueEntry> PQueue = new PriorityQueue<PQueueEntry>();
@@ -233,7 +233,7 @@ public class SearchAlgorithms {
 				return animationQueue;
 			}
 
-			// getting adjacent cells which have been not visited yet
+			// getting adjacent cells which have not been visited yet
 			for (GridCell neighbor : grid.getNeighbors(current)) {
 
 				if (!(visited.contains(neighbor))) {
@@ -257,7 +257,7 @@ public class SearchAlgorithms {
 		return animationQueue;
 	}
 	
-	public static Queue<AnimationInstruction> HeuristicDephthFirstSearch(Grid grid, GridCell startCell, GridCell endCell) {
+	public static Queue<AnimationInstruction> heuristicDepthFirstSearch(Grid grid, GridCell startCell, GridCell endCell) {
 		int traversedCells = 0;
 		
 		Queue<AnimationInstruction> animationQueue = new LinkedList<AnimationInstruction>();
@@ -294,7 +294,7 @@ public class SearchAlgorithms {
 				return animationQueue;
 			}
 
-			// getting adjacent cells which have been not visited yet
+			// getting adjacent cells which have not been visited yet
 			
 			PriorityQueue<PQueueEntry> localMinHeuristic = new PriorityQueue<PQueueEntry>();
 			for (GridCell neighbor : grid.getNeighbors(current)) {

@@ -44,12 +44,12 @@ public class Controller {
 	}
 	
 	public synchronized long accessStepSize(long stepSize) {
-		//if stepSize is -1 this methode acts as a getter
+		//if stepSize is -1 this method acts as a getter
 		if(stepSize == -1) {
 			return this.stepSize;
 		}
 		
-		//if stepsize is != to -1 this methode acts as a setter returning -1
+		//if stepSize is != to -1 this method acts as a setter returning -1
 		this.stepSize = stepSize;
 		return -1;
 		
