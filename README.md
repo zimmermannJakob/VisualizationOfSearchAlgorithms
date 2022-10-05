@@ -14,3 +14,8 @@ In the early steps of the design phase, I created this class diagram to visualiz
 
 ### Feedback 
 If you do have any feedback, feel free to let me know.
+
+## Small Demo 
+
+https://user-images.githubusercontent.com/105009705/194127784-c6c703e5-9ac7-4479-8bd4-44dd59ce8142.mp4
+
